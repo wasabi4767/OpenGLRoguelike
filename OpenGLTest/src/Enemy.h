@@ -10,10 +10,13 @@ public:
     float X() const { return x; }
     float Y() const { return y; }
     float Size() const { return radius; }
+    float DirX() const { return dirX; }  
+    float DirY() const { return dirY; }
 
 private:
     float x, y;
     float speed;
     float radius;
     int hp;
+    float dirX = 1.0f, dirY = 0.0f;
 };

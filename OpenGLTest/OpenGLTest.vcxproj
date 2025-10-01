@@ -148,6 +148,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Shaders\EnemyShader.cpp" />
     <ClCompile Include="src\Shaders\NeonOrbShader.cpp" />
     <ClCompile Include="src\Shaders\PlayerFlareShader.cpp" />
     <ClCompile Include="src\Shaders\PlayerSmokeShader.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Shaders\EnemyShader.h" />
     <ClInclude Include="src\Shaders\NeonOrbShader.h" />
     <ClInclude Include="src\Shaders\PlayerFlareShader.h" />
     <ClInclude Include="src\Shaders\PlayerSmokeShader.h" />

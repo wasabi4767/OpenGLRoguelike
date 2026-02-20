@@ -1,2 +1,19 @@
-﻿  Player.cpp
-  OpenGLTest.vcxproj -> C:\Users\福山　隼人\OneDrive\デスクトップ\OpenGLTest\x64\Debug\OpenGLTest.exe
+﻿  Bullet.cpp
+  Enemy.cpp
+  Game.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': マクロが再定義されました。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\packages\nupengl.core.0.1.0.1\build\native\include\GLFW\glfw3.h(92,1): message : 'APIENTRY' の以前の定義を確認してください
+  main.cpp
+  Player.cpp
+  EnemyShader.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': マクロが再定義されました。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\packages\nupengl.core.0.1.0.1\build\native\include\GLFW\glfw3.h(92,1): message : 'APIENTRY' の以前の定義を確認してください
+  NeonOrbShader.cpp
+  PlayerFlareShader.cpp
+  PlayerSmokeShader.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': マクロが再定義されました。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\packages\nupengl.core.0.1.0.1\build\native\include\GLFW\glfw3.h(92,1): message : 'APIENTRY' の以前の定義を確認してください
+  XPOrb.cpp
+  コードを生成中...
+  Shader.cpp
+  OpenGLTest.vcxproj -> C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\x64\Debug\OpenGLTest.exe

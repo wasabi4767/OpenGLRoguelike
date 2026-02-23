@@ -391,6 +391,168 @@ void Game::RollLevelUpChoices() {
     }
 }
 
+// ==============================
+// レベルアップ用：画像なしアイコン（図形）
+// ==============================
+static void DrawUpgradeIconGL(int code, const Rect& r, bool hovered)
+{
+    // アイコン描画領域（箱の左上 60x60）
+    float pad = 14.0f;
+    float s = hovered ? 66.0f : 60.0f;
+
+    float x0 = r.x0 + pad;
+    float y0 = r.y0 + pad;
+    float x1 = x0 + s;
+    float y1 = y0 + s;
+
+    float cx = (x0 + x1) * 0.5f;
+    float cy = (y0 + y1) * 0.5f;
+
+    // 背景プレート（薄い黒）
+    glColor4f(0.f, 0.f, 0.f, 0.18f);
+    glBegin(GL_QUADS);
+    glVertex2f(x0, y0); glVertex2f(x1, y0);
+    glVertex2f(x1, y1); glVertex2f(x0, y1);
+    glEnd();
+
+    // 共通：輪郭
+    glColor4f(1.f, 1.f, 1.f, 0.55f);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(x0, y0); glVertex2f(x1, y0);
+    glVertex2f(x1, y1); glVertex2f(x0, y1);
+    glEnd();
+
+    // codeごとに簡易アイコン
+    switch (code) {
+    case LUC_HEAL: {
+        // ハート（赤すぎない：ピンク寄り）
+        glColor4f(1.0f, 0.45f, 0.65f, 0.95f);
+        // 2つの円っぽいもの＋下三角でハート風
+        float r0 = s * 0.18f;
+        // 左丸
+        glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(cx - r0, cy + r0 * 0.4f);
+        for (int i = 0;i <= 24;i++) {
+            float a = (float)i / 24.0f * 6.2831853f;
+            glVertex2f((cx - r0) + std::cos(a) * r0, (cy + r0 * 0.4f) + std::sin(a) * r0);
+        }
+        glEnd();
+        // 右丸
+        glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(cx + r0, cy + r0 * 0.4f);
+        for (int i = 0;i <= 24;i++) {
+            float a = (float)i / 24.0f * 6.2831853f;
+            glVertex2f((cx + r0) + std::cos(a) * r0, (cy + r0 * 0.4f) + std::sin(a) * r0);
+        }
+        glEnd();
+        // 下の三角
+        glBegin(GL_TRIANGLES);
+        glVertex2f(cx - r0 * 2.1f, cy + r0 * 0.2f);
+        glVertex2f(cx + r0 * 2.1f, cy + r0 * 0.2f);
+        glVertex2f(cx, cy - r0 * 2.6f);
+        glEnd();
+    } break;
+
+    case LUC_SPEED: {
+        // 速度：ダッシュ矢印＋スピードライン（青緑）
+        glColor4f(0.35f, 0.95f, 0.85f, 0.95f);
+        float w = s * 0.30f;
+        float h = s * 0.18f;
+
+        // 矢印本体（右向き）
+        glBegin(GL_TRIANGLES);
+        glVertex2f(cx + w, cy);
+        glVertex2f(cx - w, cy + h);
+        glVertex2f(cx - w, cy - h);
+        glEnd();
+
+        // スピードライン
+        glColor4f(0.35f, 0.95f, 0.85f, 0.65f);
+        glBegin(GL_LINES);
+        glVertex2f(x0 + s * 0.12f, cy + s * 0.18f); glVertex2f(cx - w * 0.2f, cy + s * 0.18f);
+        glVertex2f(x0 + s * 0.08f, cy);           glVertex2f(cx - w * 0.5f, cy);
+        glVertex2f(x0 + s * 0.12f, cy - s * 0.18f); glVertex2f(cx - w * 0.2f, cy - s * 0.18f);
+        glEnd();
+    } break;
+
+    case LUC_BULLET: {
+        // 弾数＋1：2発弾＋小さな「+」
+        glColor4f(1.0f, 0.85f, 0.25f, 0.95f);
+        float bw = s * 0.16f;
+        float bh = s * 0.34f;
+
+        auto drawBullet = [&](float bx, float by) {
+            // 本体
+            glBegin(GL_QUADS);
+            glVertex2f(bx - bw, by - bh * 0.4f);
+            glVertex2f(bx + bw, by - bh * 0.4f);
+            glVertex2f(bx + bw, by + bh * 0.4f);
+            glVertex2f(bx - bw, by + bh * 0.4f);
+            glEnd();
+            // 先端
+            glBegin(GL_TRIANGLES);
+            glVertex2f(bx - bw, by + bh * 0.4f);
+            glVertex2f(bx + bw, by + bh * 0.4f);
+            glVertex2f(bx, by + bh * 0.7f);
+            glEnd();
+            };
+
+        drawBullet(cx - s * 0.14f, cy - s * 0.05f);
+        drawBullet(cx + s * 0.10f, cy + s * 0.05f);
+
+        // + マーク
+        glColor4f(1.f, 1.f, 1.f, 0.95f);
+        float px = x1 - s * 0.18f;
+        float py = y0 + s * 0.20f;
+        float ps = s * 0.10f;
+        glBegin(GL_LINES);
+        glVertex2f(px - ps, py); glVertex2f(px + ps, py);
+        glVertex2f(px, py - ps); glVertex2f(px, py + ps);
+        glEnd();
+    } break;
+
+    case LUC_FIRE_RATE: {
+        // 発射レート：弾＋「>>」みたいな加速マーク（オレンジ寄り）
+        glColor4f(1.0f, 0.55f, 0.20f, 0.95f);
+        float bw = s * 0.14f;
+        float bh = s * 0.32f;
+
+        // 弾（縦）
+        glBegin(GL_QUADS);
+        glVertex2f(cx - s * 0.18f - bw, cy - bh * 0.4f);
+        glVertex2f(cx - s * 0.18f + bw, cy - bh * 0.4f);
+        glVertex2f(cx - s * 0.18f + bw, cy + bh * 0.4f);
+        glVertex2f(cx - s * 0.18f - bw, cy + bh * 0.4f);
+        glEnd();
+        glBegin(GL_TRIANGLES);
+        glVertex2f(cx - s * 0.18f - bw, cy + bh * 0.4f);
+        glVertex2f(cx - s * 0.18f + bw, cy + bh * 0.4f);
+        glVertex2f(cx - s * 0.18f, cy + bh * 0.7f);
+        glEnd();
+
+        // 「>>」加速マーク
+        glColor4f(1.f, 1.f, 1.f, 0.9f);
+        float ax = cx + s * 0.05f;
+        float ay = cy;
+        float aw = s * 0.20f;
+        float ah = s * 0.14f;
+
+        glBegin(GL_TRIANGLES);
+        glVertex2f(ax, ay);
+        glVertex2f(ax - aw * 0.5f, ay + ah);
+        glVertex2f(ax - aw * 0.5f, ay - ah);
+        glVertex2f(ax + aw * 0.45f, ay);
+        glVertex2f(ax, ay + ah);
+        glVertex2f(ax, ay - ah);
+        glEnd();
+    } break;
+
+    default:
+        break;
+    }
+}
+
+
 void Game::RenderLevelUpOverlay() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -428,7 +590,11 @@ void Game::RenderLevelUpOverlay() {
             glEnd();
         }
 
-        // ※ 画像は現在保留。必要ならここにテクスチャ貼り処理を復活させる。
+        // ※ 画像は現在保留。
+        bool hovered = (hoverChoice == idx + 1);
+        int code = levelUpChoices[idx];
+        DrawUpgradeIconGL(code, r, hovered);
+
     };
 
     drawBox(0); drawBox(1); drawBox(2);

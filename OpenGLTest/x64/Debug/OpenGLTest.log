@@ -4,6 +4,59 @@
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': マクロが再定義されました。
 C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\packages\nupengl.core.0.1.0.1\build\native\include\GLFW\glfw3.h(92,1): message : 'APIENTRY' の以前の定義を確認してください
   main.cpp
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0xdf から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0xe0 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0xe1 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0xe2 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0xe3 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0xe4 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x26f から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x274 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x275 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x276 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2a0 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2a1 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2a2 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2a3 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2a4 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2a7 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2a8 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2ad から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2b0 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2b2 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2b4 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2b5 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2b6 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2b8 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2ba から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2bb から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2bc から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2bd から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x2c1 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x40a から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x40b から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x40c から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x40e から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x410 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x413 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x444 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x445 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x446 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x447 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x448 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x44a から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x44c から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x44d から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x44e から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x450 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x451 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x4d5 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x4d7 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x4d8 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x4d9 から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x4da から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x4db から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
+C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\OpenGLTest\src\main.cpp(1,1): warning C4828: オフセット 0x4dc から始まる、現在のソースの文字セット (コードページ 65001) では使用できない文字がファイルに含まれています。
   Player.cpp
   EnemyShader.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': マクロが再定義されました。
@@ -15,5 +68,6 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared\minwindef.h(1
 C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\packages\nupengl.core.0.1.0.1\build\native\include\GLFW\glfw3.h(92,1): message : 'APIENTRY' の以前の定義を確認してください
   XPOrb.cpp
   コードを生成中...
-  Shader.cpp
   OpenGLTest.vcxproj -> C:\Users\福山　隼人\OneDrive\デスクトップ\game(develop)\OpenGLRoguelike\x64\Debug\OpenGLTest.exe
+  'pwsh.exe' は、内部コマンドまたは外部コマンド、
+  操作可能なプログラムまたはバッチ ファイルとして認識されていません。

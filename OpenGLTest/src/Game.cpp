@@ -74,10 +74,6 @@ Game::Game(int width, int height, const char* title) {
     // 実行ファイルの場所を基準に相対パスを解決
     SetCWDToExeDir();
 
-    // ---- BGM 起動（必要なら wav でも可：InitBGM("Audio/bgm.wav")）----
-    InitBGM("Audio/bgm.mp3");
-    PlayBGM(true);                 // ループ再生
-    SetBGMVolume(bgmVolumeNormal); // 初期音量
 #endif
 
     std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -88,10 +84,6 @@ Game::~Game() {
     for (auto* b : bullets) delete b;
     for (auto* o : xpOrbs)  delete o;
     delete player;
-
-#if defined(_WIN32)
-    StopBGM(); // MCI を閉じる
-#endif
 
     glfwTerminate();
 }
@@ -332,10 +324,6 @@ void Game::OpenLevelUpMenu() {
 
     RollLevelUpChoices();
 
-#if defined(_WIN32)
-    // メニュー中は少し音量を下げる（好みで Pause/Resume にしてもOK）
-    SetBGMVolume(bgmVolumePaused);
-#endif
 
     char title[256];
     std::snprintf(title, sizeof(title),
@@ -378,9 +366,7 @@ void Game::ApplyLevelUpChoice(int code) {
         OpenLevelUpMenu();
     } else {
         isPausedForLevelUp = false;
-#if defined(_WIN32)
-        SetBGMVolume(bgmVolumeNormal);
-#endif
+
         glfwSetWindowTitle(window, "OpenGL Game");
     }
 }
@@ -521,13 +507,4 @@ void Game::StopBGM() {
     bgmLooping = false;
 }
 
-void Game::SetBGMVolume(int vol0to1000) {
-    if (!bgmReady) return;
-    int v = vol0to1000;
-    if (v < 0) v = 0;
-    if (v > 1000) v = 1000;
-    wchar_t cmd[64];
-    std::swprintf(cmd, 64, L"setaudio bgm volume to %d", v);
-    mciSendStringW(cmd, nullptr, 0, nullptr);
-}
 #endif

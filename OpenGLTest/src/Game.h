@@ -72,6 +72,9 @@ private:
     int playerMaxHP = 5;
     int playerHP    = 5;
 
+    // HUD
+    void RenderHUD(); // HPなど
+
     // 近接接触ダメージのクールダウン（連続ヒット抑制）
     float contactDamageCooldown = 0.55f;
     float contactDamageTimer    = 0.0f;

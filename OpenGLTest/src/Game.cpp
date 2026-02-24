@@ -266,10 +266,100 @@ void Game::Render() {
     for (auto* e : enemies) if (e) e->Draw();
     for (auto* b : bullets) if (b) b->Draw();
     player->Draw();
+    // HUD（HPなど）
+    RenderHUD();
 
     if (isPausedForLevelUp) {
         RenderLevelUpOverlay(); // 画像は保留中のため、枠とテキストのみ
     }
+}
+
+// ==============================
+// HUD：HP（ハート）
+// ==============================
+static void DrawHeartHUD(float cx, float cy, float s, bool filled)
+{
+    // 2つの円 + 下三角でハート風（2D）
+    // cx,cy は中心。s は大きさ。
+
+    // 形状パラメータ
+    float r0 = s * 0.22f; // 上の丸半径
+    float ox = s * 0.22f; // 左右の丸オフセット
+    float oy = s * 0.08f; // 丸の上下
+
+    // 塗り
+    if (filled) {
+        glColor4f(1.0f, 0.40f, 0.60f, 0.95f);
+
+        // 左丸
+        glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(cx - ox, cy + oy);
+        for (int i = 0; i <= 24; ++i) {
+            float a = (float)i / 24.0f * 6.2831853f;
+            glVertex2f((cx - ox) + std::cos(a) * r0, (cy + oy) + std::sin(a) * r0);
+        }
+        glEnd();
+
+        // 右丸
+        glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(cx + ox, cy + oy);
+        for (int i = 0; i <= 24; ++i) {
+            float a = (float)i / 24.0f * 6.2831853f;
+            glVertex2f((cx + ox) + std::cos(a) * r0, (cy + oy) + std::sin(a) * r0);
+        }
+        glEnd();
+
+        // 下（三角）
+        glBegin(GL_TRIANGLES);
+        glVertex2f(cx - ox - r0 * 1.0f, cy + oy * 0.6f);
+        glVertex2f(cx + ox + r0 * 1.0f, cy + oy * 0.6f);
+        glVertex2f(cx, cy - s * 0.40f);
+        glEnd();
+    }
+
+    // 輪郭（塗りなしの時も見えるように）
+    glColor4f(1.f, 1.f, 1.f, filled ? 0.85f : 0.45f);
+    glLineWidth(2.0f);
+    glBegin(GL_LINE_LOOP);
+
+    // ハートのパラメトリック（見た目が良い）
+    // x = 16 sin^3(t)
+    // y = 13 cos(t) - 5 cos(2t) - 2 cos(3t) - cos(4t)
+    for (int i = 0; i < 80; ++i) {
+        float t = (float)i / 80.0f * 6.2831853f;
+        float st = std::sin(t);
+        float ct = std::cos(t);
+        float x = 16.0f * st * st * st;
+        float y = 13.0f * ct - 5.0f * std::cos(2.0f * t) - 2.0f * std::cos(3.0f * t) - std::cos(4.0f * t);
+
+        // 正規化スケール
+        float k = s * 0.020f;
+        glVertex2f(cx + x * k, cy + y * k);
+    }
+
+    glEnd();
+    glLineWidth(1.0f);
+}
+
+void Game::RenderHUD()
+{
+    // 左上に HP をハートで表示
+    // ※このプロジェクトは glOrtho(0..W, 0..H) で、左下原点。
+    const float margin = 16.0f;
+    const float heartS = 28.0f;
+    const float gap = 10.0f;
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    float y = winH - margin - heartS * 0.5f;
+    for (int i = 0; i < playerMaxHP; ++i) {
+        float x = margin + heartS * 0.5f + i * (heartS + gap);
+        bool filled = (i < playerHP);
+        DrawHeartHUD(x, y, heartS, filled);
+    }
+
+    glDisable(GL_BLEND);
 }
 
 void Game::Shoot() {

@@ -93,6 +93,16 @@ private:
     int  levelUpChoices[3]      = { LUC_FIRE_RATE, LUC_BULLET, LUC_HEAL };
     Rect levelUpBoxes[3]        = {};    // 3つのボックス矩形
 
+    // --- LevelUp アイコン（PNG→OpenGL Texture）---
+    unsigned int texLUCHeal = 0;
+    unsigned int texLUCSpeed = 0;
+    unsigned int texLUCBullet = 0;
+    unsigned int texLUCFire = 0;
+    bool levelUpIconReady = false;
+
+    void LoadLevelUpIcons();
+    void FreeLevelUpIcons();
+
     // レベルアップ効果パラメータ
     const float levelup_fire_rate_multiplier = 0.85f; // 間隔×0.85（=速く）
     const int   levelup_heal_amount          = 1;     // HP +1

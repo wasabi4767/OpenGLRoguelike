@@ -12,6 +12,8 @@
 #include <algorithm>
 #include <cstdio>
 #include <iostream>
+#include <memory>
+
 
 // ---- std::max/min を使わない代替 ----
 #ifndef MAX2
@@ -25,10 +27,12 @@
 // Windows: BGM (MCI) 用
 // ============================================================
 #if defined(_WIN32)
-  #define NOMINMAX
-  #include <Windows.h>
-  #include <mmsystem.h>
-  #pragma comment(lib, "winmm.lib")
+    #define NOMINMAX
+    #include <Windows.h>
+    #include <mmsystem.h>
+    #pragma comment(lib, "winmm.lib")
+    #include <gdiplus.h>
+    #pragma comment(lib, "gdiplus.lib")
 
   // 実行ファイルのあるディレクトリへ CWD を移動（相対パス安定化）
   static void SetCWDToExeDir() {
@@ -52,6 +56,165 @@
   }
 #endif
 
+// PNG→Texture ローダ
+#if defined(_WIN32)
+
+  // GDI+ 初期化（プロセス中1回）
+  struct GDIPlusInit {
+      ULONG_PTR token = 0;
+      GDIPlusInit() {
+          Gdiplus::GdiplusStartupInput in;
+          Gdiplus::GdiplusStartup(&token, &in, nullptr);
+      }
+      ~GDIPlusInit() {
+          if (token) Gdiplus::GdiplusShutdown(token);
+      }
+  };
+  static GDIPlusInit s_gdip;
+
+  static void DebugPrintCWD_Icon() {
+      wchar_t buf[MAX_PATH];
+      DWORD n = GetCurrentDirectoryW(MAX_PATH, buf);
+      if (n) {
+          char mb[MAX_PATH * 3] = { 0 };
+          WideCharToMultiByte(CP_UTF8, 0, buf, -1, mb, sizeof(mb), nullptr, nullptr);
+          std::fprintf(stderr, "[icon] CWD: %s\n", mb);
+      }
+  }
+
+  static void DebugPrintFullPath_Icon(const char* relUtf8) {
+      std::wstring w = Utf8ToW(relUtf8);
+      wchar_t full[MAX_PATH];
+      DWORD n = GetFullPathNameW(w.c_str(), MAX_PATH, full, nullptr);
+      if (n) {
+          char mb[MAX_PATH * 3] = { 0 };
+          WideCharToMultiByte(CP_UTF8, 0, full, -1, mb, sizeof(mb), nullptr, nullptr);
+          std::fprintf(stderr, "[icon] try: %s\n", mb);
+      }
+  }
+
+  static bool FileExistsUtf8(const char* relUtf8) {
+      std::wstring w = Utf8ToW(relUtf8);
+      DWORD a = GetFileAttributesW(w.c_str());
+      return (a != INVALID_FILE_ATTRIBUTES) && !(a & FILE_ATTRIBUTE_DIRECTORY);
+  }
+
+  static unsigned int LoadTextureWithGDIPlus(const char* pathUtf8)
+  {
+      DebugPrintCWD_Icon();
+      DebugPrintFullPath_Icon(pathUtf8);
+
+      if (!FileExistsUtf8(pathUtf8)) {
+          std::fprintf(stderr, "[icon] not found: %s\n", pathUtf8);
+          return 0;
+      }
+
+      std::wstring wpath = Utf8ToW(pathUtf8);
+      Gdiplus::Bitmap bmp(wpath.c_str());
+      if (bmp.GetLastStatus() != Gdiplus::Ok) {
+          std::fprintf(stderr, "[icon] load failed: %s\n", pathUtf8);
+          return 0;
+      }
+
+      // 32bit ARGBに揃える
+      const Gdiplus::PixelFormat pf = PixelFormat32bppARGB;
+      Gdiplus::Bitmap* src = &bmp;
+      std::unique_ptr<Gdiplus::Bitmap> holder;
+      if (bmp.GetPixelFormat() != pf) {
+          holder.reset(bmp.Clone(0, 0, bmp.GetWidth(), bmp.GetHeight(), pf));
+          if (!holder) {
+              std::fprintf(stderr, "[icon] clone failed: %s\n", pathUtf8);
+              return 0;
+          }
+          src = holder.get();
+      }
+
+      Gdiplus::BitmapData bd{};
+      Gdiplus::Rect rc(0, 0, (INT)src->GetWidth(), (INT)src->GetHeight());
+      if (src->LockBits(&rc, Gdiplus::ImageLockModeRead, pf, &bd) != Gdiplus::Ok) {
+          std::fprintf(stderr, "[icon] lockbits failed: %s\n", pathUtf8);
+          return 0;
+      }
+
+      const int w = bd.Width;
+      const int h = bd.Height;
+
+      // BGRA → RGBA
+      std::vector<unsigned char> rgba((size_t)w * h * 4);
+      const unsigned char* sLine = (const unsigned char*)bd.Scan0;
+
+      for (int y = 0; y < h; ++y) {
+          const unsigned char* s = sLine + (size_t)y * bd.Stride;
+          unsigned char* d = &rgba[(size_t)y * w * 4];
+          for (int x = 0; x < w; ++x) {
+              unsigned char B = s[x * 4 + 0];
+              unsigned char G = s[x * 4 + 1];
+              unsigned char R = s[x * 4 + 2];
+              unsigned char A = s[x * 4 + 3];
+              d[x * 4 + 0] = R;
+              d[x * 4 + 1] = G;
+              d[x * 4 + 2] = B;
+              d[x * 4 + 3] = A;
+          }
+      }
+
+      src->UnlockBits(&bd);
+
+      unsigned int tex = 0;
+      glGenTextures(1, &tex);
+      glBindTexture(GL_TEXTURE_2D, tex);
+      glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
+          GL_RGBA, GL_UNSIGNED_BYTE, rgba.data());
+      glBindTexture(GL_TEXTURE_2D, 0);
+
+      return tex;
+  }
+
+  // OpenGL用に変換した画像テクスチャを、Quadに貼って描画
+  static void DrawTexInBox(unsigned int tex, const Rect& r, bool hovered)
+  {
+      if (!tex) return;
+
+      // Box内でのアイコンの描画位置
+      float pad = 14.f;
+
+      // アイコンのサイズ設定
+      float s = hovered ? 86.f : 78.f;
+      
+      // Boxの中心を計算
+      float cx = (r.x0 + r.x1) * 0.5f;
+      float cy = (r.y0 + r.y1) * 0.5f;
+      float x0 = cx - s * 0.5f;
+      float y0 = cy - s * 0.5f;
+      float x1 = x0 + s;
+      float y1 = y0 + s;
+
+      glEnable(GL_TEXTURE_2D);
+      glBindTexture(GL_TEXTURE_2D, tex);
+
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+      glColor4f(1, 1, 1, 1);
+      glBegin(GL_QUADS);
+      glTexCoord2f(0, 1); glVertex2f(x0, y0);
+      glTexCoord2f(1, 1); glVertex2f(x1, y0);
+      glTexCoord2f(1, 0); glVertex2f(x1, y1);
+      glTexCoord2f(0, 0); glVertex2f(x0, y1);
+      glEnd();
+
+      glBindTexture(GL_TEXTURE_2D, 0);
+      glDisable(GL_TEXTURE_2D);
+  }
+
+#endif // _WIN32
+
+
 // ============================================================
 // Game 本体
 // ============================================================
@@ -73,6 +236,7 @@ Game::Game(int width, int height, const char* title) {
 #if defined(_WIN32)
     // 実行ファイルの場所を基準に相対パスを解決
     SetCWDToExeDir();
+    LoadLevelUpIcons();
 
 #endif
 
@@ -86,6 +250,7 @@ Game::~Game() {
     delete player;
 
     glfwTerminate();
+    FreeLevelUpIcons();
 }
 
 void Game::Run() {
@@ -680,10 +845,26 @@ void Game::RenderLevelUpOverlay() {
             glEnd();
         }
 
-        // ※ 画像は現在保留。
         bool hovered = (hoverChoice == idx + 1);
         int code = levelUpChoices[idx];
-        DrawUpgradeIconGL(code, r, hovered);
+
+        unsigned int tex = 0;
+        switch (code) {
+        case LUC_HEAL:      tex = texLUCHeal;   break;
+        case LUC_SPEED:     tex = texLUCSpeed;  break;
+        case LUC_BULLET:    tex = texLUCBullet; break;
+        case LUC_FIRE_RATE: tex = texLUCFire;   break;
+        default: break;
+        }
+
+        if (tex) {
+            DrawTexInBox(tex, r, hovered);
+        }
+        else {
+            // 読めなかった時は従来の図形アイコンにフォールバック
+            DrawUpgradeIconGL(code, r, hovered);
+        }
+
 
     };
 
@@ -764,3 +945,29 @@ void Game::StopBGM() {
 }
 
 #endif
+
+void Game::LoadLevelUpIcons()
+{
+#if defined(_WIN32)
+    // EXE基準にする
+    texLUCHeal = LoadTextureWithGDIPlus("Images/Icons/LifeUpgradeIcon.png");
+    texLUCSpeed = LoadTextureWithGDIPlus("Images/Icons/MoveSpeedUpgradeIcon.png");
+    texLUCBullet = LoadTextureWithGDIPlus("Images/Icons/BulletUpgradeIcon.png");
+    texLUCFire = LoadTextureWithGDIPlus("Images/Icons/AttackSpeedUpgradeIcon.png");
+
+    levelUpIconReady = (texLUCHeal || texLUCSpeed || texLUCBullet || texLUCFire);
+#else
+    levelUpIconReady = false;
+#endif
+}
+
+void Game::FreeLevelUpIcons()
+{
+#if defined(_WIN32)
+    if (texLUCHeal) { glDeleteTextures(1, &texLUCHeal);   texLUCHeal = 0; }
+    if (texLUCSpeed) { glDeleteTextures(1, &texLUCSpeed);  texLUCSpeed = 0; }
+    if (texLUCBullet) { glDeleteTextures(1, &texLUCBullet); texLUCBullet = 0; }
+    if (texLUCFire) { glDeleteTextures(1, &texLUCFire);   texLUCFire = 0; }
+    levelUpIconReady = false;
+#endif
+}
